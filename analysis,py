@@ -1,16 +1,32 @@
 import pandas as pd
+import ast
+import matplotlib.pyplot as plt
 
 # Load the DataFrame from the CSV file
 df = pd.read_csv('C:\\Users\\pilonk\\projects\\music-recommender\\data.csv')
 
-# Number of unique artists
-num_artists = df['artist'].nunique()
-print(f'Number of unique artists: {num_artists}')
+# Convert the 'tags' and 'similars' columns from string to list
+df['tags'] = df['tags'].apply(ast.literal_eval)
+df['similars'] = df['similars'].apply(ast.literal_eval)
 
-# Number of unique songs
-num_songs = df['track_id'].nunique()
-print(f'Number of unique songs: {num_songs}')
+# Compute the number of tags per song
+num_tags = df['tags'].apply(len)
 
-# Check for missing data
-missing_data = df.isnull().sum()
-print(f'Missing data in each column:\n{missing_data}')
+# Compute the number of similar songs per song
+num_similars = df['similars'].apply(len)
+
+# Plot the distribution of the number of tags per song
+plt.figure(figsize=(10, 6))
+plt.hist(num_tags, bins=30, edgecolor='black')
+plt.title('Distribution of Number of Tags per Song')
+plt.xlabel('Number of Tags')
+plt.ylabel('Number of Songs')
+plt.show()
+
+# Plot the distribution of the number of similar songs per song
+plt.figure(figsize=(10, 6))
+plt.hist(num_similars, bins=30, edgecolor='black')
+plt.title('Distribution of Number of Similar Songs per Song')
+plt.xlabel('Number of Similar Songs')
+plt.ylabel('Number of Songs')
+plt.show()
