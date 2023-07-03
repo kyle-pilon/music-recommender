@@ -1,0 +1,16 @@
+import pandas as pd
+
+# Load the DataFrame from the CSV file
+df = pd.read_csv('C:\\Users\\pilonk\\projects\\music-recommender\\data.csv')
+
+# Number of unique artists
+num_artists = df['artist'].nunique()
+print(f'Number of unique artists: {num_artists}')
+
+# Number of unique songs
+num_songs = df['track_id'].nunique()
+print(f'Number of unique songs: {num_songs}')
+
+# Check for missing data
+missing_data = df.isnull().sum()
+print(f'Missing data in each column:\n{missing_data}')
